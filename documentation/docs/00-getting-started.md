@@ -6,7 +6,9 @@
 
 2. Click `Download the SDK`
 
-3. Import package in Unity
+3. If you already have a Mapbox SDK imported in your project, please delete the existing `Mapbox` folder to avoid potential conflicts
+
+4. Import the package in Unity
 
    - Assets—>Import package—>Custom Package (from the Unity editor menu) 
 
@@ -28,6 +30,7 @@ You need an [access token](https://www.mapbox.com/help/define-access-token) to u
 
 ## Next Steps
 
+- Follow along with [these tutorials](https://www.mapbox.com/unity-sdk/tutorials)
 - Explore the [bundled Unity examples](03-examples.md)
 - Learn about the [Map Factory Framework](06-map-factory-framework.md)
 - Read the [Unity/C# API documentation](https://www.mapbox.com/mapbox-unity-sdk/api/)

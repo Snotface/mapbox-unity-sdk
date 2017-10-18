@@ -7,9 +7,6 @@ git submodule update --init --recursive
 
 SDK_PATH=sdkproject/Assets/Mapbox/Core
 
-echo "deleting existing mapbox-sdk-cs..."
-if [ -d "$SDK_PATH/mapbox-sdk-cs" ]; then rm -rf $SDK_PATH/mapbox-sdk-cs; fi
-
 echo "deleting existing plugins..."
 if [ -d "$SDK_PATH/Plugins/Mapbox" ]; then rm -rf $SDK_PATH/Plugins/Mapbox; fi
 if [ -d "$SDK_PATH/Plugins/ThirdParty" ]; then rm -rf $SDK_PATH/Plugins/ThirdParty; fi
@@ -30,10 +27,6 @@ echo "DemoConsoleApp" >> x.txt
 echo "VectorTiles.Tests" >> x.txt
 echo "VerifyNetFrameworkVersion" >> x.txt
 
-echo "copying mapbox-sdk-cs..."
-mkdir -p $SDK_PATH/mapbox-sdk-cs
-rsync -av --exclude-from=x.txt ./dependencies/mapbox-sdk-cs/src/ $SDK_PATH/mapbox-sdk-cs/
-
 echo "copying vector-tile-cs..."
 mkdir -p $SDK_PATH/Plugins/Mapbox/vector-tile-cs/
 rsync -av --exclude-from=x.txt ./dependencies/vector-tile-cs/src/ $SDK_PATH/Plugins/Mapbox/vector-tile-cs/
@@ -45,10 +38,6 @@ rsync -av --exclude-from=x.txt ./dependencies/Mapbox.IO.Compression-unity/src/Ma
 echo "copying Mapbox.Json..."
 mkdir -p $SDK_PATH/Plugins/ThirdParty/Mapbox.Json/
 rsync -av --exclude-from=x.txt ./dependencies/Mapbox.Json/ $SDK_PATH/Plugins/ThirdParty/Mapbox.Json/
-
-echo "copying Triangle.NET..."
-mkdir -p $SDK_PATH/Plugins/ThirdParty/Triangle.NET/
-rsync -av --exclude-from=x.txt ./dependencies/triangle.net-uwp/Triangle.NET/Triangle/ $SDK_PATH/Plugins/ThirdParty/Triangle.NET/
 
 echo "copying aux files..."
 cp -v ./utils/link.xml $SDK_PATH/Plugins/

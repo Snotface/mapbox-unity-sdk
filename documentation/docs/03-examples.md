@@ -1,12 +1,50 @@
 # Included Examples
 
+*In addition to the bundled examples, you can find tutorials [here](https://www.mapbox.com/unity-sdk/tutorials/).*
+
 For each example, associated scripts and resources can be found in the same root directory as the scene itself.
+
+## DynamicZoom (v.1.2.0)
+
+*DynamicZoom.unity*
+
+Go anywhere in the world!
+
+This example demonstrates how to create a web-like map that loads tiles procedurally based on the (top-down) camera position. It features panning and zooming (using camera position and tile size). 
+
+## MapReload (v.1.2.0)
+
+*MapReload.unity*
+
+This example demonstrates new `Initialize` functionality in `AbstractMap` and `AbstractMapVisualizer`. There is a `ReloadMap` component which can `Initialize` a map with a latitude/longitude and zoom level whenever the UI is refreshed (upon forward geocode search result or zoom slider changed). Additionally, a new concrete implementation of `AbstractMap`, `MapAtSpecificLocation`, is used to offset the map root position so that the precise latitude/longitude requested is at world origin. This provides a consistent map view even as the zoom level changes!
+
+## LowPoly (v.1.2.0)
+
+*LowPoly.unity*
+
+This example uses a `LowPolyTerrainFactory` to facet terrain geometry. Essentially, vertices are not shared across faces and normals are `hard`. 
+
+## Globe (v.1.1.0)
+
+*Globe.unity*
+
+This example uses a `GlobeTileProvider` to fetch the entire world bounds. Additionally, a `FlatSphereTerrainFactory` is used to spherically project terrain vertices to a sphere (radius).
+
+**New in v1.2.0:**
+- Added `DragRotate` component to spin the globe with mouse input.
+- Using `SpawnOnGlobeExample` component to demonstrate conversion of latitude/longitude to unity position on sphere.
+
+## TerracedWorld (v.1.1.0)
+
+*TerracedWorld.unity*
+
+This example uses the `mapbox.mapbox-terrain-v2` data layer with a `VectorTileFactory` to generate contoured terrain (also relevant: `HeightModifier` and `PolygonMeshModifier`).
 
 ## Playground
 
 These examples demonstrate how to request specific Mapbox data using our C# library.
 
-### Forward Geocoder
+#### Forward Geocoder
 
 *ForwardGeocoder.unity*
 
@@ -14,7 +52,7 @@ A forward geocoding request will fetch GeoJSON from a place name query. A new re
 
 Visit [our API documentation](https://www.mapbox.com/api-documentation/#geocoding) for more information.
 
-### Reverse Geocoder
+#### Reverse Geocoder
 
 *ReverseGeocoder.unity*
 
@@ -22,7 +60,7 @@ A reverse geocoding request will fetch GeoJSON from a location query. The locati
 
 Visit [our API documentation](https://www.mapbox.com/api-documentation/#geocoding) for more information.
 
-### Directions
+#### Directions
 
 *Directions.unity*
 
@@ -34,7 +72,7 @@ When the geocode requests have been completed, a directions request is executed.
 
 Directions results will be logged to the UI when they are available (in the form of JSON).
 
-### Raster Tile
+#### Raster Tile
 
 *RasterTile.unity*
 
@@ -44,7 +82,7 @@ See: https://www.mapbox.com/help/define-style/
 
 See: https://www.mapbox.com/api-documentation/#retrieve-raster-tiles-from-styles
 
-### Vector Tile
+#### Vector Tile
 
 *VectorTile.unity*
 
@@ -76,11 +114,21 @@ With the exception of a `PoiVisualizer ` (`PoiDemoPoiVisualizer`) being added to
 
 `PoiDemoPoiVisualizer.asset` allows you to override which prefab to spawn for each `po_label` contained in the vector tile. This prefab should have a component that implements `ILabelVisualizationHelper` attached to it. This exists to inject feature data into (such as label and `Maki` icon).
 
+**New in v1.0.0:**
+- Added 3d POI objects in addition to the 2d POI objects to demonstrate that you can easily map latitude longitude to unity coordinates.
+
 ## Mesh Generation Styles
 
 *StylingDemoMeshGeneration.unity*
 
 This example demonstrates how to use `TypeFilters` to filter specific features for processing. In this case, we have chosen to exclude `schools` from mesh generation. Additionally, you can use `ModifierStacks` to further customize specific features (to color banks differently, for example).
+
+**New in v1.1.0:**
+- Using the `SpawnInsideModifier` to randomly distribute "bushes" inside of `park` `landuse` geometry (see `VectorLayerVisualizer`).
+
+**New in v1.2.0:**
+- Buildings contain a `FeatureSelectionDetector` and a `HighlightFeature` to show how colliders can be used to select/interact with buildings and show vector feature data.
+- Added procedural prefab spawning inside `park` layer using `SpawnInsideModifier`.
 
 ## Drive
 
@@ -155,3 +203,6 @@ return _targetTransform.GetGeoPosition(MapController.ReferenceTileRect.Center, M
 
 If you build to device, you should see a familiar map and can observe the player update with your own location. Because the camera is a child of `Player`, you should always be centered on the map.
 
+**New in v1.2.0:**
+- Map initialization happens now with the `InitializeMapWithLocationProvider` component, rather than on awake or through a custom map builder. This is a more modular approach.
+- TileProvider has been replaced with `RangeAroundTransformTileProvider` which will dynamically load tiles as the player avatar is updated with location data.

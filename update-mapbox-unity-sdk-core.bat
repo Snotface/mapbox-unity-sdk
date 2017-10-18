@@ -7,15 +7,11 @@ IF %ERRORLEVEL% NEQ 0 ECHO could not update submodules && EXIT /B 1
 
 SET SDK_PATH=sdkproject\Assets\Mapbox\Core
 
-ECHO deleting existing mapbox-sdk-cs
-IF EXIST %SDK_PATH%\mapbox-sdk-cs RD /Q /S %SDK_PATH%\mapbox-sdk-cs
-IF %ERRORLEVEL% NEQ 0 ECHO error during removal of existing mapbox-sdk-cs && EXIT /B 1
-
 ECHO deleting existing plugins
 IF EXIST %SDK_PATH%\Plugins\Mapbox RD /Q /S %SDK_PATH%\Plugins\Mapbox
-IF %ERRORLEVEL% NEQ 0 ECHO error during removal of existing mapbox-sdk-cs && EXIT /B 1
+IF %ERRORLEVEL% NEQ 0 ECHO error during removal of existing Mapbox plugins && EXIT /B 1
 IF EXIST %SDK_PATH%\Plugins\ThirdParty RD /Q /S %SDK_PATH%\Plugins\ThirdParty
-IF %ERRORLEVEL% NEQ 0 ECHO error during removal of existing mapbox-sdk-cs && EXIT /B 1
+IF %ERRORLEVEL% NEQ 0 ECHO error during removal of existing third party plugins && EXIT /B 1
 
 REM file not to copy
 ECHO project.json>>x.txt
@@ -33,10 +29,6 @@ ECHO \DemoConsoleApp\>>x.txt
 ECHO \VectorTiles.Tests\>>x.txt
 ECHO \VerifyNetFrameworkVersion\>>x.txt
 
-ECHO ---- copying mapbox-sdk-cs
-xcopy /S /R /E /Y dependencies\mapbox-sdk-cs\src\* %SDK_PATH%\mapbox-sdk-cs\ /EXCLUDE:x.txt
-IF %ERRORLEVEL% NEQ 0 ECHO error during copying mapbox-sdk-cs && EXIT /B 1
-
 ECHO ---- copying vector-tile-cs
 xcopy /S /R /E /Y dependencies\vector-tile-cs\src\* %SDK_PATH%\Plugins\Mapbox\vector-tile-cs\ /EXCLUDE:x.txt
 IF %ERRORLEVEL% NEQ 0 ECHO error during copying vector-tile-cs && EXIT /B 1
@@ -48,10 +40,6 @@ IF %ERRORLEVEL% NEQ 0 ECHO error during copying Mapbox.IO.Compression && EXIT /B
 ECHO ---- copying Mapbox.Json
 xcopy /S /R /E /Y dependencies\Mapbox.Json\* %SDK_PATH%\Plugins\ThirdParty\Mapbox.Json\ /EXCLUDE:x.txt
 IF %ERRORLEVEL% NEQ 0 ECHO error during copying Mapbox.Json && EXIT /B 1
-
-ECHO ---- copying Triangle.NET
-xcopy /S /R /E /Y dependencies\triangle.net-uwp\Triangle.NET\Triangle\* %SDK_PATH%\Plugins\ThirdParty\Triangle.NET\ /EXCLUDE:x.txt
-IF %ERRORLEVEL% NEQ 0 ECHO error during copying Triangle.NET && EXIT /B 1
 
 ECHO copying aux files
 COPY /Y utils\link.xml %SDK_PATH%\Plugins\
